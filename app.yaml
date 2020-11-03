@@ -1,0 +1,22 @@
+runtime: custom
+env: flex
+
+env_variables:
+  APACHE_RUN_USER: "#1000"
+  APACHE_RUN_GROUP: "#1000"
+
+network:
+  instance_tag: lake-excl-dev-proj-001
+  name: dlakexcl-vpcnw-001
+  subnetwork_name: dlakexcl-vpcnw-001
+  session_affinity: true
+
+handlers:
+  - url: /(.*\.(gif|png|jpg|css|js|woff|woff2|svg|eot|ttf|otf))$
+    static_files: public/\1
+    upload: public/.*\.(gif|png|jpg|css|js|woff|woff2|svg|eot|ttf|otf)$
+
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto
